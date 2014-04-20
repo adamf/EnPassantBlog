@@ -5,6 +5,7 @@
     <script src="js/chess.js"> </script>
     <script src="js/chessboard-0.3.0.js"> </script>
     <script src="js/games.js"> </script>
+    <script src="js/beepboop.js"> </script>
     <script>
         window.onload = init;
         var board;
@@ -19,6 +20,7 @@
             board = new ChessBoard('board1', 'start');
             moves = chess_moves.history({verbose: true});
             console.log(moves);
+            setupMusic();
             setTimeout(movePiece, 1600);
         }
 
@@ -43,6 +45,10 @@
                 }
             }
             console.log(moves[i]);
+            if (unplayableSquares[moves[i].from] == 1) {
+                delete unplayableSquares[moves[i].from];
+            }
+            playPosition(moves[i]);
             var text = $('#pgn').text();
             if (current_move % 2 == 0) {
                 display_move = current_move / 2;
