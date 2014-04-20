@@ -52,7 +52,6 @@
             $('#pgn').text(text + ' ' + moves[i].san);
             
             current_move = current_move + 1;
-            setTimeout(movePiece, 1600);
         }
     </script>
 </head>
@@ -60,6 +59,7 @@
     <div id="board1" style="width: 400px"></div>
     <text id="status"></text>
     <text id="pgn"></text>
+    <button onclick='movePiece()'>Next</button>
 
 </body>
 </html>
