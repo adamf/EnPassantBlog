@@ -91,10 +91,19 @@ function playRankInFile(cur_move) {
             var color = cur_position[cur_square].substring(0,1);
             var piece = cur_position[cur_square].substring(1,2);
             if (unplayableSquares[cur_square] != 1) { 
+
+                if (typeof(synths[i - 1]) != 'undefined') {
+                    synths[i - 1].disconnect();
+                }
+                var sub_volume = context.createGainNode();
+                sub_volume.gain.value = 0.5;
+                sub_volume.connect(volume);
+                synths[i - 1] = context.createOscillator();
+                synths[i - 1].connect(sub_volume);
                 synths[i - 1].type = pieceEffects[piece].synth;
-                synths[i - 1].sub_volume.gain.value = pieceEffects[piece].gain;
+                sub_volume.gain.value = pieceEffects[piece].gain;
                 synths[i - 1].frequency.value = color_and_rank_to_frequency[color][i-1];
-                synths[i - 1].noteOn(0);
+                synths[i - 1].start(0);
             }
         }
     }
@@ -108,11 +117,14 @@ function playRankInFile(cur_move) {
 }
 
 function stopNotes(cur_move) {
+    disconnectSynths();
+    movePiece();
+}
+
+function disconnectSynths() {
     for(var j = 0; j < files.length; j++) {
         if (typeof(synths[j]) != 'undefined') {
             synths[j].disconnect();
         }
     }
-    playPosition(cur_move);
-
 }
