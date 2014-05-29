@@ -14,6 +14,9 @@
         var current_move = 0;
         var cur_file = 0;
         var moves = [];
+        var note_duration_ms = 200;
+        var speedup_ms = 0;
+        var speedup_factor = 1.1;
 
 
         function init() {
@@ -21,6 +24,7 @@
             board = new ChessBoard('board1', 'start');
             moves = chess_moves.history({verbose: true});
             console.log(moves);
+            speedup_ms = Math.floor((note_duration_ms / speedup_factor) / moves.length)
             setupMusic();
             setTimeout(movePiece, 1600);
         }
@@ -50,13 +54,14 @@
                 delete unplayableSquares[moves[i].from];
             }
             playPosition(moves[i]);
+            note_duration_ms = note_duration_ms - speedup_ms;
             var text = $('#pgn').text();
             if (current_move % 2 == 0) {
                 display_move = current_move / 2;
                 display_move = display_move + 1;
                 text = text + ' ' + display_move + '. ';
             }
-            $('#pgn').text(text + ' ' + moves[i].san);
+            $('#pgn').text(text + ' ' + moves[i].san + ' (' + note_duration_ms + 'ms)');
             
             current_move = current_move + 1;
         }

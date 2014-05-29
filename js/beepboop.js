@@ -109,10 +109,10 @@ function playRankInFile(cur_move) {
     }
     cur_file = cur_file + 1;
     if (cur_file < files.length) {
-        setTimeout(function(){playRankInFile(cur_move);}, 200);
+        setTimeout(function(){playRankInFile(cur_move);}, note_duration_ms);
     } else {
         cur_file = 0;
-        setTimeout(function(){ stopNotes(cur_move); }, 200);
+        setTimeout(function(){ stopNotes(cur_move); }, note_duration_ms);
     }
 }
 
