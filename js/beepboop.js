@@ -23,7 +23,7 @@ function PieceEffect(gain, synth) {
 function setupMusic() 
 {
     context = new webkitAudioContext();
-    volume = context.createGainNode();
+    volume = context.createGain();
     volume.gain.value = 0.5;
     volume.connect(context.destination);
     
@@ -72,7 +72,7 @@ function setupMusic()
 
 function playPosition(cur_move) {
     for (var i = 0; i < files.length; i++) {
-        var sub_volume = context.createGainNode();
+        var sub_volume = context.createGain();
         sub_volume.gain.value = 0.5;
         sub_volume.connect(volume);
         synths[i] = context.createOscillator();
@@ -95,7 +95,7 @@ function playRankInFile(cur_move) {
                 if (typeof(synths[i - 1]) != 'undefined') {
                     synths[i - 1].disconnect();
                 }
-                var sub_volume = context.createGainNode();
+                var sub_volume = context.createGain();
                 sub_volume.gain.value = 0.5;
                 sub_volume.connect(volume);
                 synths[i - 1] = context.createOscillator();
